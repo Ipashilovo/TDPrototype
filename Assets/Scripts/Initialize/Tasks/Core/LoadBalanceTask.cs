@@ -1,9 +1,9 @@
-﻿using Balance;
-using Balance.BalanceConfig;
+﻿using Balance.BalanceConfig;
+using Balance.Data;
 using UnityEngine;
 using Zenject;
 
-namespace Initialize.Tasks
+namespace Initialize.Tasks.Core
 {
     public class LoadBalanceTask : SyncInitTask
     {

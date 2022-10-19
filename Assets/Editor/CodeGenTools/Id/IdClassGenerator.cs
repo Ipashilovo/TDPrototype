@@ -3,13 +3,14 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Refactoring.Editor
+namespace Editor.CodeGenTools.Id
 {
     public enum IdType
     {
         String,
         Long,
-        Double
+        Double,
+        Float
     }
 
     public class IdClassGenerator : ScriptableWizard

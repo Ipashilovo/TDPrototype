@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Balance.Data;
+using UnityEngine;
 
 namespace Balance.BalanceConfig
 {

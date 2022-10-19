@@ -8,7 +8,6 @@ namespace Initialize
 {
     public class EntryPoint : MonoBehaviour
     {
-        private List<IUpdatable> _updatables = new List<IUpdatable>();
         private DiContainer _container;
         
         private void Start()

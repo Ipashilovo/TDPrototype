@@ -1,10 +1,10 @@
 ﻿using System;
-using Balance;
+using Balance.Data;
 using PlayerState;
 using UnityEngine;
 using Zenject;
 
-namespace Initialize.Tasks
+namespace Initialize.Tasks.Core
 {
     [RequireTask(typeof(LoadBalanceTask))]
     public class LoadStateTask : SyncInitTask

@@ -1,4 +1,4 @@
-﻿namespace Balance
+﻿namespace Balance.Data
 {
     public class BalanceData
     {
