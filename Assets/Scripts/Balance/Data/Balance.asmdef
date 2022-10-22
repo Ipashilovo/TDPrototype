@@ -1,7 +1,9 @@
 {
     "name": "Balance",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:d8d6fad5377ec0945844f73a749d26d3"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

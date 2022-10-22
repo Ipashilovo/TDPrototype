@@ -2465,27 +2465,31 @@ namespace Zenject
         }
 
         // Same as Resolve<> except it will return all bindings that are associated with the given type
-        public List<TContract> ResolveAll<TContract>()
+        public List<TContract> ResolveAll<TContract>(InjectSources? injectSources = null)
         {
-            return (List<TContract>)ResolveAll(typeof(TContract));
+            return (List<TContract>)ResolveAll(typeof(TContract), injectSources);
         }
 
-        public IList ResolveAll(Type contractType)
+        public IList ResolveAll(Type contractType, InjectSources? injectSources = null)
         {
-            return ResolveIdAll(contractType, null);
+            return ResolveIdAll(contractType, null, injectSources);
         }
 
-        public List<TContract> ResolveIdAll<TContract>(object identifier)
+        public List<TContract> ResolveIdAll<TContract>(object identifier, InjectSources? injectSources = null)
         {
-            return (List<TContract>)ResolveIdAll(typeof(TContract), identifier);
+            return (List<TContract>)ResolveIdAll(typeof(TContract), identifier, injectSources);
         }
 
-        public IList ResolveIdAll(Type contractType, object identifier)
+        public IList ResolveIdAll(Type contractType, object identifier, InjectSources? injectSources = null)
         {
             using (var context = ZenPools.SpawnInjectContext(this, contractType))
             {
                 context.Identifier = identifier;
                 context.Optional = true;
+                if (injectSources.HasValue)
+                {
+                    context.SourceType = injectSources.Value;
+                }
                 return ResolveAll(context);
             }
         }

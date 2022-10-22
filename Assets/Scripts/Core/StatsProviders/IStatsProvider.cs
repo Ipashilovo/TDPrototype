@@ -11,6 +11,9 @@ namespace Core.StatsProviders
         public void SetBaseStats(TTarget target, TStats stats);
 
         public void Dispatch<T>(T source, TTarget target);
+
+        public void AddTarget<TTargetData>(TTarget target, TTargetData targetData);
+        public void RemoveTarget(TTarget target);
     }
 
     public abstract class StatsProvider<TTarget, TStats> : IStatsProvider<TTarget, TStats> where TStats : struct
@@ -38,6 +41,15 @@ namespace Core.StatsProviders
         {
             _stats[target].Dispatch(source);
         }
+
+        public virtual void AddTarget<TTargetData>(TTarget target, TTargetData targetData)
+        {
+            
+        }
+
+        public virtual void RemoveTarget(TTarget target)
+        {
+        }
     }
 
     public interface IStatsContainer<TStats> where TStats : struct
@@ -54,11 +66,17 @@ namespace Core.StatsProviders
     {
         protected Dictionary<object, TStats> _statsMap = new Dictionary<object, TStats>();
         protected TStats _baseStats;
-        protected ReactiveProperty<TStats> _stats = new ReactiveProperty<TStats>();
+        protected ReactiveProperty<TStats> _stat = new ReactiveProperty<TStats>();
+
+        public StatsContainer(TStats stats)
+        {
+            SetBaseStat(stats);
+        }
         
         public void SetBaseStat(TStats stats)
         {
             _baseStats = stats;
+            PatchAll();
         }
 
         public void PatchStats<TSource>(TSource source, TStats stats)
@@ -69,7 +87,7 @@ namespace Core.StatsProviders
 
         public IReadOnlyReactiveProperty<TStats> Get()
         {
-            return _stats;
+            return _stat;
         }
 
         public void Dispatch<TSource>(TSource source)
@@ -77,6 +95,17 @@ namespace Core.StatsProviders
             _statsMap.Remove(source);
         }
 
-        protected abstract void PatchAll();
+        private void PatchAll()
+        {
+            var result = _baseStats;
+            foreach (var stat in _statsMap)
+            {
+                result = Patch(result, stat.Value);
+            }
+
+            _stat.Value = result;
+        }
+
+        protected abstract TStats Patch(TStats baseStat, TStats stat);
     }
 }

@@ -7,22 +7,34 @@ namespace UI.Core
     public interface IView : IDisposable
     {
         public Type Target { get; }
-        public void Bind<TModel>(TModel model) where TModel : IViewModel;
+        public void Bind(object model);
         public void Show(bool isOverAll = false);
         void Hide();
     }
 
-    public abstract class AbstractView<TSource> : MonoBehaviour, IView where TSource : IViewModel 
+    public abstract class AbstractViewBase : MonoBehaviour, IView
     {
-        public Type Target => typeof(TSource);
+        public abstract void Dispose();
+
+        public abstract Type Target { get; }
+        public abstract void Bind(object model);
+
+        public abstract void Show(bool isOverAll = false);
+
+        public abstract void Hide();
+    }
+
+    public abstract class AbstractView<TSource> : AbstractViewBase, IView where TSource : IViewModel 
+    {
+        public override Type Target => typeof(TSource);
         protected TSource _model;
         
-        public void Bind<TModel>(TModel model) where TModel : TSource
+        public override void Bind(object model)
         {
-            _model = model;
+            var screenModel = (TSource) model;
         }
 
-        public void Show(bool isOverAll)
+        public override void Show(bool isOverAll)
         {
             if (isOverAll)
             {
@@ -32,14 +44,16 @@ namespace UI.Core
             gameObject.SetActive(true);
         }
 
-        public void Hide()
+        public override void Hide()
         {
             gameObject.SetActive(false);
             _model?.Close();
             Dispose();
         }
 
-        public virtual void Dispose()
+        protected abstract void Bind(TSource model);
+
+        public override void Dispose()
         {
             _model?.Dispose();
         }

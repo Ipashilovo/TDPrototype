@@ -1,5 +1,6 @@
 ﻿using Balance.BalanceConfig;
 using Balance.Data;
+using Initialize.Core;
 using UnityEngine;
 using Zenject;
 
