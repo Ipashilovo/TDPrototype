@@ -21,6 +21,10 @@ MonoBehaviour:
     m_Address: Assets/SceneView/Level
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: e522522d634ea644a882ab982bb8c82a
+    m_Address: Assets/SceneView/Enemy/EnemyRoot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: b479fac78a146744bb51c7117b1edb5d, type: 2}
   m_SchemaSet:

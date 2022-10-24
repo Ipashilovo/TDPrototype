@@ -21,13 +21,12 @@ namespace Core.GameplaySystems.Unit.Enemy
         private readonly IEnemyModelRoot _enemyModelRoot;
         private readonly IEnemyMovable _enemyMovable;
         private readonly IEnemyAttackProvider _attackProvider;
-        private readonly IHealthProvider _healthProvider;
         private EnemyBattleState _currentState;
         private Dictionary<EnemyBattleState, Action> _state;
-        
+
+        public IHealthProvider HealthProvider { get; }
+        public IEnemyModelRoot EnemyModelRoot => _enemyModelRoot;
         public UnitId Id => _enemyData.Id;
-        
-        public event Action<IEnemy> Dead;
 
         public EnemyUnit(EnemyData enemyData, IEnemyModelRoot enemyModelRoot, IEnemyMovable enemyMovable, IEnemyAttackProvider attackProvider, IHealthProvider healthProvider)
         {
@@ -35,7 +34,7 @@ namespace Core.GameplaySystems.Unit.Enemy
             _enemyModelRoot = enemyModelRoot;
             _enemyMovable = enemyMovable;
             _attackProvider = attackProvider;
-            _healthProvider = healthProvider;
+            HealthProvider = healthProvider;
             _state = new Dictionary<EnemyBattleState, Action>()
             {
                 {EnemyBattleState.Attack, Attack},
@@ -44,13 +43,6 @@ namespace Core.GameplaySystems.Unit.Enemy
             _attackProvider.Target.Subscribe(v =>
             {
                 _currentState = v == null ? EnemyBattleState.Walk : EnemyBattleState.Attack;
-            }).AddTo(_disposableList);
-            _healthProvider.Health.Subscribe(v =>
-            {
-                if (v <= Amount.Zero)
-                {
-                    Dead?.Invoke(this);
-                }
             }).AddTo(_disposableList);
         }
 

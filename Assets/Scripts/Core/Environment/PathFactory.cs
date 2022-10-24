@@ -8,25 +8,29 @@
         {
             _path = path;
         }
-        public PathPoint Get(PathPoint? previousPoint = null)
+        
+        public bool TryGet(out PathPoint nextPoint, PathPoint? previousPoint = null)
         {
             if (previousPoint.HasValue == false)
             {
-                return _path[0];
+                nextPoint = _path[0];
+                return true;
             }
 
             var index = _path.IndexOf(previousPoint.Value);
             if (index < _path.Count - 1)
             {
-                index++;
+                nextPoint = _path[index + 1];
+                return true;
             }
 
-            return _path[index];
+            nextPoint = default;
+            return false;
         }
     }
 
     public interface IPathPointFactory
     {
-        public PathPoint Get(PathPoint? previousPoint = null);
+        public bool TryGet(out PathPoint nextPoint, PathPoint? previousPoint = null);
     }
 }

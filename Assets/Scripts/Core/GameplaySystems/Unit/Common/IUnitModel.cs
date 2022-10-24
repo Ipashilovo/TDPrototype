@@ -13,6 +13,6 @@ namespace Core.GameplaySystems.Unit.Common
 
     public interface IAnimatorProvider
     {
-        public void Play();
+        public void Attack();
     }
 }

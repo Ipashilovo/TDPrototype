@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Balance.Data.Enemy;
+using Balance.Data.Level;
 
 namespace Balance.Data
 {
@@ -7,5 +8,6 @@ namespace Balance.Data
     {
         public PlayerData PlayerData;
         public EnemyData EnemyData;
+        public LevelData[] LevelData;
     }
 }

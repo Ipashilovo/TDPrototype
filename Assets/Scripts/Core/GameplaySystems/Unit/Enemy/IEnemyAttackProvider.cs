@@ -65,14 +65,14 @@ namespace Core.GameplaySystems.Unit.Enemy
                 _enemyMovable.LookAt(_target.Value.Position);
                 if (_attackDataTime.HasValue == false || _timeProvider.WorldTime > _attackDataTime.Value)
                 {
-                    _enemyModelRoot.Model.AnimatorProvider.Play();
+                    _enemyModelRoot.Model.AnimatorProvider.Attack();
                     _attackDataTime = _timeProvider.WorldTime + _stats.Value.FireRate;
                     _target.Value.TakeDamage(_stats.Value.Damage);
                 }
             }
             else
             {
-                _enemyMovable.Move(_target.Value.Position);
+                _enemyMovable.MoveUnit(_target.Value.Position);
             }
         }
 

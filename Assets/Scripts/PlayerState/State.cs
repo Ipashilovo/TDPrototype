@@ -1,4 +1,6 @@
-﻿namespace PlayerState
+﻿using Entity;
+
+namespace PlayerState
 {
     public class State
     {
